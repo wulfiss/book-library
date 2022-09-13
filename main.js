@@ -30,19 +30,19 @@ function createTable(arrLength){
 }
 
 
-  const tokyoBlues = new Book('Tokyo Blue', 'Haruki Murakami', '384', 'yes');
-  const afterDark = new Book('After Dark', 'Haruki Murakami', '208', 'yes');
+const tokyoBlues = new Book('Tokyo Blue', 'Haruki Murakami', '384', 'yes');
+const afterDark = new Book('After Dark', 'Haruki Murakami', '208', 'yes');
   
 
-  tokyoBlues.infoBook();
-  afterDark.infoBook();
+tokyoBlues.infoBook();
+afterDark.infoBook();
 
 
 
-  let myLibrary = [tokyoBlues, afterDark];
+let myLibrary = [tokyoBlues, afterDark];
 
 
-  console.log(myLibrary);
+console.log(myLibrary);
 
 let $addBook = document.querySelector('button');
 let spanBooks = document.querySelector('.someBook');
