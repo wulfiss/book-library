@@ -44,10 +44,25 @@ let myLibrary = [tokyoBlues, afterDark];
 
 console.log(myLibrary);
 
+
+
 let $addBook = document.querySelector('button');
 let spanBooks = document.querySelector('.someBook');
 
 createTable(myLibrary.length);
+
+for(let x = 0; x < myLibrary.length; x++){
+let tdTitle = document.querySelector(`td[data-axis = "0:${x}"]`);
+let tdAuthor = document.querySelector(`td[data-axis = "1:${x}"]`);
+let tdPages = document.querySelector(`td[data-axis = "2:${x}"]`);
+let tdRed = document.querySelector(`td[data-axis = "3:${x}"]`);
+
+tdTitle.textContent = myLibrary[x].title;
+tdAuthor.textContent = myLibrary[x].author;
+tdPages.textContent = myLibrary[x].pages;
+tdRed.textContent = myLibrary[x].read;
+}
+
 
 $addBook.addEventListener('click', () => {
     
@@ -59,6 +74,8 @@ $addBook.addEventListener('click', () => {
     let newBook = new Book(bTitle, bAuthor, bPages, bRead);
 
     addBookToLibrary(newBook, myLibrary);
+
+
     
 });
 
