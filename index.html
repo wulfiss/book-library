@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="main.js" defer></script>
+    <title>Book Library</title>
+</head>
+<body>
+
+    <form action="">
+        <label for="bTitle">Title:</label>
+        <input type="text" name="book-title" id="bTitle">
+        <label for="bAuthor">Author:</label>
+        <input type="text" name="book-author" id="bAuthor">
+        <label for="bPages">N° of pages:</label>
+        <input type="number" name="book-pages" id="bPages">
+        <label for="bRead">Read it:</label>
+        <input type="checkbox" name="book-read" id="bRead" value="Yes">
+        <input type="checkbox" name="book-read" id="bRead" value="No" checked hidden>
+        <button type="button">ADD</button>
+    </form>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th id=tTitle>Title</th>
+                <th id="tAuthor">Author</th>
+                <th id="tPages">N° of Pages</th>
+                <th id="tRead">Read it?</th>
+            </tr>
+        </thead>
+        <tbody id="tBooks"></tbody>
+    </table>
+    
+</body>
+</html>
