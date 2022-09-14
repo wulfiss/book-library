@@ -90,8 +90,9 @@ for(let y = 0; y < myLibrary.length; y++){
     function addElement(){
         let newDiv = document.createElement('div');
         let newContent = document.createTextNode(myLibrary[y].infoBook());
-
+        let newBotton = document.createElement('button');
         newDiv.appendChild(newContent);
+        newDiv.appendChild(newBotton);
 
         const currentDiv = document.querySelector("#div1");
         document.body.insertBefore(newDiv, currentDiv);
