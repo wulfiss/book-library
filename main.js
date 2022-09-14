@@ -6,7 +6,7 @@ function Book(title, author, pages, read){
 }
 
 Book.prototype.infoBook = function() {
-    return console.log(`${this.title} by ${this.author}, ${this.pages} pages, ${this.read}.`);
+    return (`${this.title} by ${this.author}, ${this.pages} pages, ${this.read}.`);
 }
 
 function addBookToLibrary(object, arr){
@@ -57,21 +57,10 @@ function ShowData(){
     }
 }
 
-const tokyoBlues = new Book('Tokyo Blue', 'Haruki Murakami', '384', 'yes');
-const afterDark = new Book('After Dark', 'Haruki Murakami', '208', 'yes');
-  
+let book1 = new Book('Tokyo Blue', 'Haruki Murakami', '384', 'Yes');
+let book2 = new Book('After Dark', 'Haruki Murakami', "208", 'Yes');
 
-tokyoBlues.infoBook();
-afterDark.infoBook();
-
-
-
-let myLibrary = [tokyoBlues, afterDark];
-
-
-console.log(myLibrary);
-
-
+let myLibrary = [book1, book2];
 
 let $addBook = document.querySelector('button');
 let spanBooks = document.querySelector('.someBook');
@@ -95,4 +84,19 @@ $addBook.addEventListener('click', () => {
     AddTable(myLibrary.length);
     ShowData();
 });
+
+for(let y = 0; y < myLibrary.length; y++){
+
+    function addElement(){
+        let newDiv = document.createElement('div');
+        let newContent = document.createTextNode(myLibrary[y].infoBook());
+
+        newDiv.appendChild(newContent);
+
+        const currentDiv = document.querySelector("#div1");
+        document.body.insertBefore(newDiv, currentDiv);
+    }
+
+    addElement();
+}
 
