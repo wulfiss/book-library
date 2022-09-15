@@ -34,10 +34,10 @@ function AddTable(arrLength){
     let tBody = document.getElementById('tBooks');
 
     let tr = tBody.insertRow();
-    for(let j = 0; j < 4; j++){
+    for(let j = 0; j < 5; j++){
         let td = tr.insertCell();
-        td.appendChild(document.createTextNode('----'));
         td.setAttribute("data-axis", `${j}:${arrLength-1}`);
+        td.appendChild(document.createElement('button'));
     }
     
     table.appendChild(tBody);
@@ -64,11 +64,14 @@ let myLibrary = [book1, book2];
 
 let $addBook = document.querySelector('button');
 let spanBooks = document.querySelector('.someBook');
+let bookContainer = document.querySelector('#book-container');
+let showData = 0;
+//createTable(myLibrary.length);
+//ShowData();
 
-createTable(myLibrary.length);
-ShowData();
+ShowElements(bookContainer, myLibrary, showData);
 
-
+let $deleteButtons = document.querySelector('.delete-button');
 
 $addBook.addEventListener('click', () => {
     
@@ -81,23 +84,47 @@ $addBook.addEventListener('click', () => {
 
     addBookToLibrary(newBook, myLibrary);
 
-    AddTable(myLibrary.length);
-    ShowData();
+    //AddTable(myLibrary.length);
+    //ShowData();
+    showData = 1;
+    addElement(bookContainer, myLibrary, showData);
+    showData = 0;
 });
 
-for(let y = 0; y < myLibrary.length; y++){
 
-    function addElement(){
+bookContainer.addEventListener('click', (e) => {
+    let target = e.target;
+    let handler;
+
+    if(target.nodeName == "BUTTON" && (handler = target.getAttribute('data-handler'))){
+        console.log(handler);
+        let divDelete = document.querySelector(`div[data-handler="${handler}"]`);
+        divDelete.remove();
+    }
+});
+
+function ShowElements(divParent, myBooks, showData){
+    let y = 0;
+
+    if(showData == 1){
+        y = myBooks.length-1;
+    };
+
+    for(y; y < myBooks.length; y++){
         let newDiv = document.createElement('div');
-        let newContent = document.createTextNode(myLibrary[y].infoBook());
+        newDiv.setAttribute('data-handler', `${y}`);
+        let newContent = document.createTextNode(myBooks[y].infoBook());
         let newBotton = document.createElement('button');
+        newBotton.setAttribute('type', `button`);
+        newBotton.setAttribute('class', `delete-button`);
+        newBotton.setAttribute('data-handler', `${y}`);
         newDiv.appendChild(newContent);
         newDiv.appendChild(newBotton);
 
-        const currentDiv = document.querySelector("#div1");
-        document.body.insertBefore(newDiv, currentDiv);
+        divParent.appendChild(newDiv);
     }
 
-    addElement();
 }
+
+
 
