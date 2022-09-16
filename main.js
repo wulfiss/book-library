@@ -59,17 +59,18 @@ function ShowData(){
 
 let book1 = new Book('Tokyo Blue', 'Haruki Murakami', '384', 'Yes');
 let book2 = new Book('After Dark', 'Haruki Murakami', "208", 'Yes');
+let book3 = new Book('Bakemonogatari', 'Nisio Isin', "200", 'Yes');
 
-let myLibrary = [book1, book2];
+let myLibrary = [book1, book2, book3];
 
 let $addBook = document.querySelector('button');
 let spanBooks = document.querySelector('.someBook');
 let bookContainer = document.querySelector('#book-container');
-let showData = 0;
+
 //createTable(myLibrary.length);
 //ShowData();
 
-ShowElements(bookContainer, myLibrary, showData);
+ShowElements(bookContainer, myLibrary, 'false');
 
 let $deleteButtons = document.querySelector('.delete-button');
 
@@ -86,9 +87,9 @@ $addBook.addEventListener('click', () => {
 
     //AddTable(myLibrary.length);
     //ShowData();
-    showData = 1;
-    addElement(bookContainer, myLibrary, showData);
-    showData = 0;
+    
+    ShowElements(bookContainer, myLibrary, 'true');
+    
 });
 
 
@@ -100,14 +101,18 @@ bookContainer.addEventListener('click', (e) => {
         console.log(handler);
         let divDelete = document.querySelector(`div[data-handler="${handler}"]`);
         divDelete.remove();
+        myLibrary.splice(handler, 1);
+        ShowElements(bookContainer, myLibrary, 'delete');
     }
 });
 
 function ShowElements(divParent, myBooks, showData){
     let y = 0;
-
-    if(showData == 1){
+    
+    if(showData == "true"){
         y = myBooks.length-1;
+    }else if (showData == 'delete'){
+        divParent.innerHTML = " ";
     };
 
     for(y; y < myBooks.length; y++){
