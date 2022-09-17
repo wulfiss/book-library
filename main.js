@@ -13,36 +13,6 @@ function addBookToLibrary(object, arr){
     arr.push(object);
 }
 
-function createTable(arrLength){
-    let table = document.getElementById('bookTable');
-    let tBody = document.getElementById('tBooks');
-
-    for(let i = 0; i < arrLength; i++){
-        let tr = tBody.insertRow();
-        for(let j = 0; j < 4; j++){
-            let td = tr.insertCell();
-            td.appendChild(document.createTextNode('----'));
-            td.setAttribute("data-axis", `${j}:${i}`);
-        }
-    }
-
-    table.appendChild(tBody);
-}
-
-function AddTable(arrLength){
-    let table = document.getElementById('bookTable');
-    let tBody = document.getElementById('tBooks');
-
-    let tr = tBody.insertRow();
-    for(let j = 0; j < 5; j++){
-        let td = tr.insertCell();
-        td.setAttribute("data-axis", `${j}:${arrLength-1}`);
-        td.appendChild(document.createElement('button'));
-    }
-    
-    table.appendChild(tBody);
-}
-
 function ShowData(){
     for(let x = 0; x < myLibrary.length; x++){
         let tdTitle = document.querySelector(`td[data-axis = "0:${x}"]`);
@@ -57,6 +27,46 @@ function ShowData(){
     }
 }
 
+function ShowElements(divParent, myBooks, showData){
+    let y = 0;
+    
+    if(showData == "true"){
+        y = myBooks.length-1;
+    }else if (showData == 'delete'){
+        divParent.innerHTML = " ";
+    };
+
+    for(y; y < myBooks.length; y++){
+        let newDiv = document.createElement('div');
+        newDiv.setAttribute('data-handler', `${y}`);
+        let newContent = document.createTextNode(myBooks[y].infoBook());
+
+        let newBotton = document.createElement('button');
+        newBotton.setAttribute('type', `button`);
+        newBotton.setAttribute('class', `delete-button`);
+        newBotton.setAttribute('data-handler', `${y}`);
+        newBotton.textContent = 'Delete';
+
+        let newCheckbox = document.createElement('input');
+        newCheckbox.setAttribute('type', `checkbox`);
+        newCheckbox.setAttribute('class', `read-it`);
+        newCheckbox.setAttribute('data-handler', `${y}`);
+        newCheckbox.setAttribute('name', 'CReadIt');
+
+        if(myBooks[y].read == 'Yes'){
+            newCheckbox.checked = true;
+        }else{
+            newCheckbox.checked = false;
+        }
+
+        newDiv.appendChild(newContent);
+        newDiv.appendChild(newBotton);
+        newDiv.appendChild(newCheckbox);
+
+        divParent.appendChild(newDiv);
+    }
+
+}
 let book1 = new Book('Tokyo Blue', 'Haruki Murakami', '384', 'Yes');
 let book2 = new Book('After Dark', 'Haruki Murakami', "208", 'Yes');
 let book3 = new Book('Bakemonogatari', 'Nisio Isin', "200", 'Yes');
@@ -67,8 +77,6 @@ let $addBook = document.querySelector('button');
 let spanBooks = document.querySelector('.someBook');
 let bookContainer = document.querySelector('#book-container');
 
-//createTable(myLibrary.length);
-//ShowData();
 
 ShowElements(bookContainer, myLibrary, 'false');
 
@@ -84,10 +92,6 @@ $addBook.addEventListener('click', () => {
     let newBook = new Book(bTitle, bAuthor, bPages, bRead);
 
     addBookToLibrary(newBook, myLibrary);
-
-    //AddTable(myLibrary.length);
-    //ShowData();
-    
     ShowElements(bookContainer, myLibrary, 'true');
     
 });
@@ -104,32 +108,24 @@ bookContainer.addEventListener('click', (e) => {
         myLibrary.splice(handler, 1);
         ShowElements(bookContainer, myLibrary, 'delete');
     }
+    
 });
 
-function ShowElements(divParent, myBooks, showData){
-    let y = 0;
+bookContainer.addEventListener('change', (e) =>{
     
-    if(showData == "true"){
-        y = myBooks.length-1;
-    }else if (showData == 'delete'){
-        divParent.innerHTML = " ";
-    };
+    let target = e.target;
+    let handler;
 
-    for(y; y < myBooks.length; y++){
-        let newDiv = document.createElement('div');
-        newDiv.setAttribute('data-handler', `${y}`);
-        let newContent = document.createTextNode(myBooks[y].infoBook());
-        let newBotton = document.createElement('button');
-        newBotton.setAttribute('type', `button`);
-        newBotton.setAttribute('class', `delete-button`);
-        newBotton.setAttribute('data-handler', `${y}`);
-        newDiv.appendChild(newContent);
-        newDiv.appendChild(newBotton);
-
-        divParent.appendChild(newDiv);
+    if(target.nodeName == "INPUT" && target.getAttribute('type') == "checkbox" && (handler = target.getAttribute('data-handler'))){
+        if(target.checked == true){
+            myLibrary[handler].read = 'Yes';
+        }else if(target.checked == false){
+            myLibrary[handler].read = 'No';
+        }
     }
+});
 
-}
+
 
 
 
