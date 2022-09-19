@@ -41,27 +41,30 @@ function ShowElements(divParent, myBooks, showData){
         newDiv.setAttribute('data-handler', `${y}`);
         let newContent = document.createTextNode(myBooks[y].infoBook());
 
-        let newBotton = document.createElement('button');
-        newBotton.setAttribute('type', `button`);
-        newBotton.setAttribute('class', `delete-button`);
-        newBotton.setAttribute('data-handler', `${y}`);
-        newBotton.textContent = 'Delete';
+        let $delete = document.createElement('button');
+        $delete.setAttribute('type', `button`);
+        $delete.setAttribute('class', `delete-button`);
+        $delete.setAttribute('data-handler', `${y}`);
+        $delete.textContent = 'Delete';
 
-        let newCheckbox = document.createElement('input');
-        newCheckbox.setAttribute('type', `checkbox`);
-        newCheckbox.setAttribute('class', `read-it`);
-        newCheckbox.setAttribute('data-handler', `${y}`);
-        newCheckbox.setAttribute('name', 'CReadIt');
+        let $Read = document.createElement('button');
+        $Read.setAttribute('type', `button`);
+        $Read.setAttribute('class', `read-it`);
+        $Read.setAttribute('data-handler', `${y}`);
+        $Read.setAttribute('name', 'BReadIt');
 
         if(myBooks[y].read == 'Yes'){
-            newCheckbox.checked = true;
-        }else{
-            newCheckbox.checked = false;
+            $Read.textContent = 'READ IT';
+        } else if(myBooks[y].read == 'No'){
+            $Read.textContent = 'NO READ IT';
         }
 
+
+        
         newDiv.appendChild(newContent);
-        newDiv.appendChild(newBotton);
-        newDiv.appendChild(newCheckbox);
+        newDiv.appendChild($Read);
+        newDiv.appendChild($delete);
+        
 
         divParent.appendChild(newDiv);
     }
@@ -101,28 +104,22 @@ bookContainer.addEventListener('click', (e) => {
     let target = e.target;
     let handler;
 
-    if(target.nodeName == "BUTTON" && (handler = target.getAttribute('data-handler'))){
-        console.log(handler);
+    if(target.nodeName == "BUTTON" &&
+     target.getAttribute('class') == "delete-button" &&
+      (handler = target.getAttribute('data-handler'))){
+
         let divDelete = document.querySelector(`div[data-handler="${handler}"]`);
         divDelete.remove();
         myLibrary.splice(handler, 1);
         ShowElements(bookContainer, myLibrary, 'delete');
+
+    }else if(target.nodeName == 'BUTTON' && 
+    target.getAttribute('class') == "read-it" && 
+    (handler = target.getAttribute('data-handler'))){
+        target.textContent = 'KAKA';
+        target.setAttribute('class', `no-read-it`);
     }
     
-});
-
-bookContainer.addEventListener('change', (e) =>{
-    
-    let target = e.target;
-    let handler;
-
-    if(target.nodeName == "INPUT" && target.getAttribute('type') == "checkbox" && (handler = target.getAttribute('data-handler'))){
-        if(target.checked == true){
-            myLibrary[handler].read = 'Yes';
-        }else if(target.checked == false){
-            myLibrary[handler].read = 'No';
-        }
-    }
 });
 
 
