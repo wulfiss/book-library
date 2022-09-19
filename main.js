@@ -73,18 +73,40 @@ function ShowElements(divParent, myBooks, showData){
         let bookDiv = document.createElement('div');
         bookDiv.setAttribute('data-handler', `${y}`);
 
-        let nameBookPara = document.createElement('p');
-        nameBookPara.textContent = 'Name:';
+        let titleBookPara = document.createElement('p');
+        titleBookPara.textContent = 'Title: ';
 
-        let nameBookSpan = document.createElement('span');
-        nameBookSpan.setAttribute('id', 'name-book-span');
+        let titleBookSpan = document.createElement('span');
+        titleBookSpan.setAttribute('id', 'title-book-span');
+        titleBookSpan.textContent = myBooks[y].title;
+
+        titleBookPara.appendChild(titleBookSpan);
+        bookDiv.appendChild(titleBookPara);
+        
+        let authorBookPara = document.createElement('p');
+        authorBookPara.textContent = 'Author: ';
+
+        let authorBookSpan = document.createElement('span');
+        authorBookSpan.setAttribute('id', 'author-book-span');
+        authorBookSpan.textContent = myBooks[y].author;
+
+        authorBookPara.appendChild(authorBookSpan);
+        bookDiv.appendChild(authorBookPara);
+
+        let pagesBookPara = document.createElement('p');
+        pagesBookPara.textContent = 'Pages: ';
+
+        let pagesBookSpan = document.createElement('span');
+        pagesBookSpan.setAttribute('id', 'pages-book-span');
+        pagesBookSpan.textContent = myBooks[y].pages;
+
+        pagesBookPara.appendChild(pagesBookSpan);
+        bookDiv.appendChild(pagesBookPara);
         
 
-        nameBookPara.appendChild(nameBookSpan);
-        bookDiv.appendChild(nameBookPara);
 
         divParent.appendChild(bookDiv);
-
+        
     }
 
 }
