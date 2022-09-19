@@ -177,8 +177,3 @@ bookContainer.addEventListener('click', (e) => {
     }
     
 });
-
-
-
-
-
