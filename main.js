@@ -37,6 +37,7 @@ function ShowElements(divParent, myBooks, showData){
     };
 
     for(y; y < myBooks.length; y++){
+        /*
         let newDiv = document.createElement('div');
         newDiv.setAttribute('data-handler', `${y}`);
         let newContent = document.createTextNode(myBooks[y].infoBook());
@@ -67,6 +68,23 @@ function ShowElements(divParent, myBooks, showData){
         
 
         divParent.appendChild(newDiv);
+        */
+
+        let bookDiv = document.createElement('div');
+        bookDiv.setAttribute('data-handler', `${y}`);
+
+        let nameBookPara = document.createElement('p');
+        nameBookPara.textContent = 'Name:';
+
+        let nameBookSpan = document.createElement('span');
+        nameBookSpan.setAttribute('id', 'name-book-span');
+        
+
+        nameBookPara.appendChild(nameBookSpan);
+        bookDiv.appendChild(nameBookPara);
+
+        divParent.appendChild(bookDiv);
+
     }
 
 }
