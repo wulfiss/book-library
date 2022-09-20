@@ -13,19 +13,6 @@ function addBookToLibrary(object, arr){
     arr.push(object);
 }
 
-function ShowData(){
-    for(let x = 0; x < myLibrary.length; x++){
-        let tdTitle = document.querySelector(`td[data-axis = "0:${x}"]`);
-        let tdAuthor = document.querySelector(`td[data-axis = "1:${x}"]`);
-        let tdPages = document.querySelector(`td[data-axis = "2:${x}"]`);
-        let tdRed = document.querySelector(`td[data-axis = "3:${x}"]`);
-
-        tdTitle.textContent = myLibrary[x].title;
-        tdAuthor.textContent = myLibrary[x].author;
-        tdPages.textContent = myLibrary[x].pages;
-        tdRed.textContent = myLibrary[x].read;
-    }
-}
 
 function ShowElements(divParent, myBooks, showData){
     let y = 0;
@@ -37,9 +24,63 @@ function ShowElements(divParent, myBooks, showData){
     };
 
     for(y; y < myBooks.length; y++){
-        let newDiv = document.createElement('div');
-        newDiv.setAttribute('data-handler', `${y}`);
-        let newContent = document.createTextNode(myBooks[y].infoBook());
+
+        let bookDiv = document.createElement('div');
+        bookDiv.setAttribute('data-handler', `${y}`);
+
+        let titleBookPara = document.createElement('p');
+        titleBookPara.setAttribute('class', 'title-Book bPara');
+        titleBookPara.textContent = 'Title: ';
+
+        let titleBookSpan = document.createElement('span');
+        titleBookSpan.setAttribute('class', 'titleBook bSpan');
+        titleBookSpan.textContent = myBooks[y].title;
+
+        titleBookPara.appendChild(titleBookSpan);
+        bookDiv.appendChild(titleBookPara);
+        
+        let authorBookPara = document.createElement('p');
+        authorBookPara.setAttribute('class', 'author-Book bPara');
+        authorBookPara.textContent = 'Author: ';
+
+        let authorBookSpan = document.createElement('span');
+        authorBookSpan.setAttribute('class', 'authorBook bSpan');
+        authorBookSpan.textContent = myBooks[y].author;
+
+        authorBookPara.appendChild(authorBookSpan);
+        bookDiv.appendChild(authorBookPara);
+
+        let pagesBookPara = document.createElement('p');
+        pagesBookPara.setAttribute('class', 'pages-Book bPara');
+        pagesBookPara.textContent = 'Pages: ';
+
+        let pagesBookSpan = document.createElement('span');
+        pagesBookSpan.setAttribute('class', 'pagesBook bSpan');
+        pagesBookSpan.textContent = myBooks[y].pages;
+
+        pagesBookPara.appendChild(pagesBookSpan);
+        bookDiv.appendChild(pagesBookPara);
+        
+        let statusBookPara = document.createElement('p');
+        statusBookPara.setAttribute('class', 'status-Book bPara');
+        statusBookPara.textContent = 'Read: ';
+
+        let $read = document.createElement('button');
+        $read.setAttribute('type', 'button');
+        $read.setAttribute('data-handler', `${y}`);
+        $read.setAttribute('id', 'bStatus');
+
+        if(myBooks[y].read == 'true'){
+            $read.textContent = 'Yes';
+            $read.setAttribute('class', 'BRead trueRead');
+        }else if(myBooks[y].read == 'false'){
+            $read.textContent = 'No';
+            $read.setAttribute('class', 'BRead falseRead');
+        }
+
+        statusBookPara.appendChild($read);
+        bookDiv.appendChild(statusBookPara);
+
 
         let $delete = document.createElement('button');
         $delete.setAttribute('type', `button`);
@@ -47,32 +88,20 @@ function ShowElements(divParent, myBooks, showData){
         $delete.setAttribute('data-handler', `${y}`);
         $delete.textContent = 'Delete';
 
-        let $Read = document.createElement('button');
-        $Read.setAttribute('type', `button`);
-        $Read.setAttribute('class', `read-it`);
-        $Read.setAttribute('data-handler', `${y}`);
-        $Read.setAttribute('name', 'BReadIt');
-
-        if(myBooks[y].read == 'Yes'){
-            $Read.textContent = 'READ IT';
-        } else if(myBooks[y].read == 'No'){
-            $Read.textContent = 'NO READ IT';
-        }
+        bookDiv.appendChild($delete);
 
 
+
+        divParent.appendChild(bookDiv);
         
-        newDiv.appendChild(newContent);
-        newDiv.appendChild($Read);
-        newDiv.appendChild($delete);
-        
-
-        divParent.appendChild(newDiv);
     }
 
 }
-let book1 = new Book('Tokyo Blue', 'Haruki Murakami', '384', 'Yes');
-let book2 = new Book('After Dark', 'Haruki Murakami', "208", 'Yes');
-let book3 = new Book('Bakemonogatari', 'Nisio Isin', "200", 'Yes');
+
+
+let book1 = new Book('Tokyo Blue', 'Haruki Murakami', '384', 'true');
+let book2 = new Book('After Dark', 'Haruki Murakami', "208", 'true');
+let book3 = new Book('Bakemonogatari', 'Nisio Isin', "200", 'true');
 
 let myLibrary = [book1, book2, book3];
 
@@ -114,15 +143,19 @@ bookContainer.addEventListener('click', (e) => {
         ShowElements(bookContainer, myLibrary, 'delete');
 
     }else if(target.nodeName == 'BUTTON' && 
-    target.getAttribute('class') == "read-it" && 
+    target.getAttribute('id') == "bStatus" && 
     (handler = target.getAttribute('data-handler'))){
-        target.textContent = 'KAKA';
-        target.setAttribute('class', `no-read-it`);
+
+        if(myLibrary[handler].read == 'true'){
+            myLibrary[handler].read = 'false';
+            target.setAttribute('class', 'BRead falseRead');
+            target.textContent = 'No';
+        }else if(myLibrary[handler].read == 'false'){
+            myLibrary[handler].read = 'true';
+            target.setAttribute('class', 'BRead trueRead');
+            target.textContent = 'Yes';
+        }
+        
     }
     
 });
-
-
-
-
-
