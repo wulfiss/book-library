@@ -24,34 +24,6 @@ function ShowElements(divParent, myBooks, showData){
     };
 
     for(y; y < myBooks.length; y++){
-        /*
-         let $delete = document.createElement('button');
-        $delete.setAttribute('type', `button`);
-        $delete.setAttribute('class', `delete-button`);
-        $delete.setAttribute('data-handler', `${y}`);
-        $delete.textContent = 'Delete';
-
-        let $Read = document.createElement('button');
-        $Read.setAttribute('type', `button`);
-        $Read.setAttribute('class', `read-it`);
-        $Read.setAttribute('data-handler', `${y}`);
-        $Read.setAttribute('name', 'BReadIt');
-
-        if(myBooks[y].read == 'Yes'){
-            $Read.textContent = 'READ IT';
-        } else if(myBooks[y].read == 'No'){
-            $Read.textContent = 'NO READ IT';
-        }
-
-
-        
-        newDiv.appendChild(newContent);
-        newDiv.appendChild($Read);
-        newDiv.appendChild($delete);
-        
-
-        divParent.appendChild(newDiv);
-        */
 
         let bookDiv = document.createElement('div');
         bookDiv.setAttribute('data-handler', `${y}`);
@@ -96,6 +68,7 @@ function ShowElements(divParent, myBooks, showData){
         let $read = document.createElement('button');
         $read.setAttribute('type', 'button');
         $read.setAttribute('data-handler', `${y}`);
+        $read.setAttribute('id', 'bStatus');
 
         if(myBooks[y].read == 'true'){
             $read.textContent = 'Yes';
@@ -170,10 +143,19 @@ bookContainer.addEventListener('click', (e) => {
         ShowElements(bookContainer, myLibrary, 'delete');
 
     }else if(target.nodeName == 'BUTTON' && 
-    target.getAttribute('class') == "BRead" && 
+    target.getAttribute('id') == "bStatus" && 
     (handler = target.getAttribute('data-handler'))){
-        target.textContent = 'KAKA';
-        target.setAttribute('class', `BRead falseRead`);
+
+        if(myLibrary[handler].read == 'true'){
+            myLibrary[handler].read = 'false';
+            target.setAttribute('class', 'BRead falseRead');
+            target.textContent = 'No';
+        }else if(myLibrary[handler].read == 'false'){
+            myLibrary[handler].read = 'true';
+            target.setAttribute('class', 'BRead trueRead');
+            target.textContent = 'Yes';
+        }
+        
     }
     
 });
