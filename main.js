@@ -1,13 +1,22 @@
-function Book(title, author, pages, read){
+/*function Book(title, author, pages, read){
     this.title = title
     this.author = author
     this.pages = pages
     this.read = read
+}*/
+
+Book = class{
+    constructor(title, author, pages, read){
+        this.title = title
+        this.author = author
+        this.pages = pages
+        this.read = read
+    }
 }
 
-Book.prototype.infoBook = function() {
-    return (`${this.title} by ${this.author}, ${this.pages} pages, ${this.read}.`);
-}
+//Book.prototype.infoBook = function() {
+//    return (`${this.title} by ${this.author}, ${this.pages} pages, ${this.read}.`);
+//}
 
 function addBookToLibrary(object, arr){
     arr.push(object);
